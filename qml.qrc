@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainForm.ui.qml</file>
+        <file>Brick.qml</file>
+        <file>BattleField.qml</file>
+        <file>PlayerTank.qml</file>
+    </qresource>
+    <qresource prefix="/files">
+        <file>res/img/brick.png</file>
+        <file>res/img/explosion.gif</file>
+        <file>res/img/player_tank.png</file>
+    </qresource>
+</RCC>

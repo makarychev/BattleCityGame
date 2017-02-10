@@ -1,0 +1,41 @@
+import QtQuick 2.6
+import QtQuick.Window 2.2
+import QtQuick.Controls 2.1
+import com.game.keyhandler 1.0
+
+Window {
+    visible: true
+    width: 600
+    height: 600
+    title: qsTr("The Game")
+
+    Rectangle {
+        id: field
+        width: 520
+        height: 520
+        color: "black"
+        anchors.centerIn: parent
+        objectName: "battleField"
+
+        KeyHandlerCpp {
+            width: parent.width
+            height: parent.height
+            id: presser
+            focus: true
+            Keys.onPressed: {
+                pressed(event.key);
+            }
+        }
+
+        BattleField {}
+
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            sd.width = sd.width/2
+            sd.height = sd.height/2
+        }
+    }
+}
