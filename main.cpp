@@ -4,11 +4,15 @@
 #include <QQmlContext>
 #include "playertank.h"
 #include "keyhandler.h"
+#include "gameobjectfactory.h"
+#include "gamecontroller.h"
+
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    qDebug() << __FUNCTION__ << "start ";
 
+    QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
     qmlRegisterType<PlayerTank>("com.game.playerTank", 1, 0, "PlayerTank");
@@ -16,22 +20,10 @@ int main(int argc, char *argv[])
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
-    QObject* rootObject = engine.rootObjects().first();
-    QQuickItem* field = rootObject->findChild<QQuickItem*>("battleField");
+    qDebug() << "start object creation";
 
-    QScopedPointer<PlayerTank> pPlayerTank(new PlayerTank);
-    QString qmlFile = QStringLiteral("qrc:/PlayerTank.qml");
-    QQmlComponent component(&engine, QUrl(qmlFile));
-    auto object = qobject_cast<PlayerTank*>(component.create());
-    if (object != nullptr) {
-        QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
-        object->setParent(field);
-        object->setParentItem(field);
-    }
-
-    pPlayerTank->setProperty("x", 120);
-    pPlayerTank->setProperty("y", 120);
-
+    GameObjectFactory::get().init(&engine);
+    GameController::get().init(engine.rootObjects().first());
 
     return app.exec();
 }

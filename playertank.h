@@ -1,10 +1,9 @@
 #ifndef PLAYERTANK_H
 #define PLAYERTANK_H
 
-#include <QObject>
-#include <QQuickItem>
+#include <tank.h>
 
-class PlayerTank : public QQuickItem
+class PlayerTank : public Tank
 {
     Q_OBJECT
 public:

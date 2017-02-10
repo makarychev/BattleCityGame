@@ -6,7 +6,10 @@ CONFIG += c++11
 SOURCES += main.cpp \
     playertank.cpp \
     keyhandler.cpp \
-    gamecontroller.cpp
+    gamecontroller.cpp \
+    gameobjectfactory.cpp \
+    tank.cpp \
+    gameobject.cpp
 
 RESOURCES += qml.qrc
 
@@ -35,4 +38,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     playertank.h \
     keyhandler.h \
-    gamecontroller.h
+    gamecontroller.h \
+    gameobjectfactory.h \
+    tank.h \
+    gameobject.h

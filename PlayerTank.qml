@@ -12,4 +12,5 @@ PlayerTank {
         width: parent.width
         height: parent.width
     }
+    Component.onCompleted: playerTank.init()
 }
