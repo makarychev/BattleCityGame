@@ -10,25 +10,27 @@ public:
     GameObject() = default;
     virtual ~GameObject() = default;
 
-    void setPosition(const QPoint &pos){
-        qDebug() << __FUNCTION__;
+    void setPosition(const QPoint &pos) noexcept {
         setProperty("x", pos.x());
         setProperty("y", pos.y());
     }
-    QPoint getPosition() const {
+    QPoint getPosition() const noexcept {
         return QPoint(property("x").toInt(), property("y").toInt());
     }
-    void setSize(QSize size){
+    void setSize(QSize size) noexcept {
         setProperty("width", size.width());
         setProperty("height", size.height());
     }
-    QSize getSize() const {
+    QSize getSize() const noexcept {
         return QSize(property("width").toInt(), property("height").toInt());
     }
-    void visible(bool state) {
+    QRect getRect() const noexcept {
+        return QRect(getPosition(), getSize());
+    }
+    void visible(bool state) noexcept {
         setProperty("visible", state);
     }
-    bool isDesroyable() const {
+    bool isDesroyable() const noexcept {
         return m_bIsDestroyable;
     }
 

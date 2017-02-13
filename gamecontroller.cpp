@@ -3,20 +3,16 @@
 #include "playertank.h"
 #include <QDebug>
 #include <QPoint>
+#include "brick.h"
 
-void GameController::init(QObject *rootObject)
+void GameController::init()
 {
     m_pPlayerTank = GameObjectFactory::get().cretePlayerTank();
-}
-
-bool GameController::isPositionAllowed(QPoint point)
-{
-    return true; // todo: implement me!
+    m_bricks = GameObjectFactory::get().getBricks();
 }
 
 void GameController::keyPressed(Qt::Key key)
 {
-    qDebug() << __FUNCTION__;
     using ts = Tank::Step;
     ts step = ts::NONE;
     switch (key) {
@@ -51,7 +47,6 @@ void GameController::keyPressed(Qt::Key key)
         break;
     }
 
-    qDebug() << step;
     m_pPlayerTank->move(step);
 }
 
@@ -60,7 +55,20 @@ GameController::GameController() : QObject(nullptr)
 
 }
 
-GameController::~GameController()
+bool GameController::isMoveAllowed(QRect newPos) const
 {
+    auto battleField = GameObjectFactory::get().getBattleField();
+    if (newPos.x() < 0
+            || newPos.y() <0
+            || newPos.x() > battleField->width() - battleField->x()
+            || newPos.y() > battleField->height() - battleField->y())
+        return false;
 
+    foreach (auto brick, m_bricks) {
+        if (newPos.intersects(brick->getRect())){
+            qDebug() << "newPos: " << newPos << " | brick: " << brick->getRect();
+            return false;
+        }
+    }
+    return true;
 }

@@ -6,7 +6,7 @@
 #include "keyhandler.h"
 #include "gameobjectfactory.h"
 #include "gamecontroller.h"
-
+#include "brick.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,13 +17,14 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<PlayerTank>("com.game.playerTank", 1, 0, "PlayerTank");
     qmlRegisterType<KeyHandler>("com.game.keyhandler", 1, 0, "KeyHandlerCpp");
+    qmlRegisterType<Brick>("com.game.brick", 1, 0, "BrickCpp");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     qDebug() << "start object creation";
 
     GameObjectFactory::get().init(&engine);
-    GameController::get().init(engine.rootObjects().first());
+    GameController::get().init(); // engine.rootObjects().first()
 
     return app.exec();
 }

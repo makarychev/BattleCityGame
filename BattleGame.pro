@@ -41,4 +41,5 @@ HEADERS += \
     gamecontroller.h \
     gameobjectfactory.h \
     tank.h \
-    gameobject.h
+    gameobject.h \
+    brick.h

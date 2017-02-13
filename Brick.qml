@@ -1,6 +1,7 @@
 import QtQuick 2.0
+import com.game.brick 1.0
 
-Item {
+BrickCpp {
    objectName: "brick"
    width: 20
    height: 20

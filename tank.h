@@ -2,20 +2,21 @@
 #define TANK_H
 
 #include "gameobject.h"
+#include <map>
 
 class Tank : public GameObject
 {
     Q_OBJECT
 public:
     enum Step {
-        NONE,
         UP,
         DOWN,
         LEFT,
-        RIGHT
+        RIGHT,
+        NONE
     };
 
-    Tank() = default;
+    Tank() {}
     virtual ~Tank() = default;
     void move(Step step);
     void fire();
@@ -32,8 +33,6 @@ protected:
 
     void rotate(Step step);
 
-
-
 private:
     QPoint m_point;
 
@@ -41,12 +40,17 @@ private:
 
     Step m_lastStep = Step::NONE;
     Type m_type = ENEMY;
+
+    const std::map<Step, int> m_RotationMap = {
+        {Step::UP, 0},
+        {Step::RIGHT, 90},
+        {Step::DOWN, 180},
+        {Step::LEFT, 270}
+    };
+
 signals:
 
 public slots:
 
-
-
 };
-
 #endif // TANK_H

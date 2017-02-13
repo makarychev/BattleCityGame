@@ -7,6 +7,8 @@
 
 
 class Tank;
+class Brick;
+class BattleField;
 
 class GameObjectFactory
 {
@@ -18,12 +20,15 @@ public:
 
     void init(QQmlApplicationEngine* engine);
     std::shared_ptr<Tank> cretePlayerTank();
+    QList<Brick *> getBricks() const;
+    QQuickItem *getBattleField() const;
 
 private:
     GameObjectFactory();
 
     QQmlApplicationEngine* m_pEngine = nullptr;
-    QQuickItem* m_pField = nullptr;
+    QQuickItem* m_pBattleField = nullptr;
+    QObject* m_rootObject = nullptr;
 };
 
 #endif // GAMEOBJECTFACTORY_H

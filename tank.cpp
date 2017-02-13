@@ -1,12 +1,13 @@
 #include "tank.h"
 #include "gamecontroller.h"
 
+
 void Tank::rotate(Tank::Step step)
 {
     if (step == m_lastStep || step == Step::NONE)
         return;
 
-    setProperty("rotation", 90); // todo: set rotation map
+    setProperty("rotation", m_RotationMap.at(step));
     m_lastStep = step;
 }
 
@@ -22,17 +23,15 @@ void Tank::init()
 
 void Tank::move(Tank::Step step)
 {
-    qDebug() << __FUNCTION__ << "<-----";
+    qDebug() << __FUNCTION__ << "<-----" << " Step: " << step;
     if (step == Step::NONE)
         return;
+    qDebug() << "Tank::move | Point = " << getPosition();
 
     if (isChangeDirection(step)){
-        qDebug() << "isChangeDirection() - true";
         rotate(step);
     } else {
-        qDebug() << "isChangeDirection() - false";
         auto point = getPosition();
-        qDebug() << "Point = " << point;
         switch (step) {
         case Step::UP:
             point.setY(point.y() - STEP_SIZE);
@@ -51,15 +50,10 @@ void Tank::move(Tank::Step step)
             break;
         }
         // change position
-        if (GameController::get().isPositionAllowed(point)){
-//            setPosition(point);
-            qDebug() << "Point = " << point;
-            setProperty("x", point.x());
-            setProperty("y", point.y());
+        if (GameController::get().isMoveAllowed(QRect(point, getSize()))){
+            setPosition(point);
         }
-
     }
-
 }
 
 bool Tank::isChangeDirection(Tank::Step step)

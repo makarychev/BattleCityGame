@@ -5,6 +5,7 @@
 #include <memory>
 
 class Tank;
+class Brick;
 
 class GameController : public QObject
 {
@@ -15,8 +16,8 @@ public:
         return self;
     }
 
-    void init(QObject* rootObject);
-    bool isPositionAllowed(QPoint point);
+    void init();
+    bool isMoveAllowed(QRect newPos) const;
 signals:
 
 public slots:
@@ -24,9 +25,10 @@ public slots:
 
 private:
     GameController();
-    ~GameController();
+    ~GameController() = default;
 
     std::shared_ptr<Tank> m_pPlayerTank;
+    QList<Brick*> m_bricks;
 };
 
 #endif // GAMECONTROLLER_H
