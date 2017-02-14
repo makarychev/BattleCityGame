@@ -2,6 +2,7 @@
 #include "gameobjectfactory.h"
 #include "playertank.h"
 #include "brick.h"
+#include "rocket.h"
 
 using namespace std;
 
@@ -45,6 +46,43 @@ QList<Brick *> GameObjectFactory::getBricks() const
 QQuickItem *GameObjectFactory::getBattleField() const
 {
     return m_pBattleField;
+}
+
+// todo: create object pool and reuse it
+Rocket *GameObjectFactory::getRocket(Direction direction, QRect startPosition) const
+{
+    QString qmlFile = QStringLiteral("qrc:/Rocket.qml");
+    QQmlComponent component(m_pEngine, QUrl(qmlFile));
+    Rocket* object = qobject_cast<Rocket*>(component.create());
+    if (object != nullptr) {
+        QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
+        object->setParentItem(m_pBattleField);
+        object->setParent(m_pBattleField);
+        object->setDirection(direction);
+        int x = startPosition.x(), y = startPosition.y();
+        switch (direction) {
+        case Direction::UP:
+            x = startPosition.x() + startPosition.width()/2;
+            break;
+        case Direction::DOWN:
+            x = startPosition.x() + startPosition.width()/2;
+            y = startPosition.y() + startPosition.height();
+            break;
+        case Direction::RIGHT:
+            x = startPosition.x() + startPosition.width();
+            y = startPosition.y() + startPosition.height()/2;
+            break;
+        case Direction::LEFT:
+            y = startPosition.y() + startPosition.height()/2;
+            break;
+        default:
+            break;
+        }
+        object->setX(x);
+        object->setY(y);
+    }
+    qDebug() << "Rocket creation: " << object;
+    return object;
 }
 
 GameObjectFactory::GameObjectFactory()

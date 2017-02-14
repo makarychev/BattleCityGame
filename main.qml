@@ -1,7 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.1
-import com.game.keyhandler 1.0
+import Game.KeyHandler 1.0
 
 Window {
     visible: true

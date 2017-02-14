@@ -4,10 +4,11 @@
 #include <QQmlContext>
 #include <QQuickItem>
 #include <memory>
-
+#include <direction.h>
 
 class Tank;
 class Brick;
+class Rocket;
 class BattleField;
 
 class GameObjectFactory
@@ -22,6 +23,7 @@ public:
     std::shared_ptr<Tank> cretePlayerTank();
     QList<Brick *> getBricks() const;
     QQuickItem *getBattleField() const;
+    Rocket *getRocket(Direction direction, QRect startPosition) const;
 
 private:
     GameObjectFactory();

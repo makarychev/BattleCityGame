@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import com.game.brick 1.0
+import Game.Brick 1.0
 
 BrickCpp {
    objectName: "brick"

@@ -5,6 +5,7 @@
         <file>Brick.qml</file>
         <file>BattleField.qml</file>
         <file>PlayerTank.qml</file>
+        <file>Rocket.qml</file>
     </qresource>
     <qresource prefix="/files">
         <file>res/img/brick.png</file>

@@ -2,9 +2,9 @@
 #include "gamecontroller.h"
 
 
-void Tank::rotate(Tank::Step step)
+void Tank::rotate(Direction step)
 {
-    if (step == m_lastStep || step == Step::NONE)
+    if (step == m_lastStep || step == Direction::NONE)
         return;
 
     setProperty("rotation", m_RotationMap.at(step));
@@ -18,13 +18,13 @@ void Tank::fire()
 
 void Tank::init()
 {
-    rotate(Step::DOWN);
+    rotate(Direction::DOWN);
 }
 
-void Tank::move(Tank::Step step)
+void Tank::move(Direction step)
 {
     qDebug() << __FUNCTION__ << "<-----" << " Step: " << step;
-    if (step == Step::NONE)
+    if (step == Direction::NONE)
         return;
     qDebug() << "Tank::move | Point = " << getPosition();
 
@@ -33,16 +33,16 @@ void Tank::move(Tank::Step step)
     } else {
         auto point = getPosition();
         switch (step) {
-        case Step::UP:
+        case Direction::UP:
             point.setY(point.y() - STEP_SIZE);
             break;
-        case Step::DOWN:
+        case Direction::DOWN:
             point.setY(point.y() + STEP_SIZE);
             break;
-        case Step::LEFT:
+        case Direction::LEFT:
             point.setX(point.x() - STEP_SIZE);
             break;
-        case Step::RIGHT:
+        case Direction::RIGHT:
             point.setX(point.x() + STEP_SIZE);
             break;
         default:
@@ -56,7 +56,7 @@ void Tank::move(Tank::Step step)
     }
 }
 
-bool Tank::isChangeDirection(Tank::Step step)
+bool Tank::isChangeDirection(Direction step)
 {
     if (step != m_lastStep)
         return true;

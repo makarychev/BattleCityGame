@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import com.game.playerTank 1.0
+import Game.PlayerTank 1.0
 
 PlayerTank {
     id: playerTank
