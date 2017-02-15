@@ -5,28 +5,36 @@
 #include <QQuickItem>
 #include <memory>
 #include <direction.h>
+#include "rocket.h"
 
 class Tank;
 class Brick;
 class Rocket;
 class BattleField;
+class Eagle;
 
 class GameObjectFactory
 {
 public:
+    enum TankType {
+        Player,
+        Enemy
+    };
     static GameObjectFactory& get(){
         static GameObjectFactory self;
         return self;
     }
 
     void init(QQmlApplicationEngine* engine);
-    std::shared_ptr<Tank> cretePlayerTank();
+    Tank* createTank(TankType type) const;
     QList<Brick *> getBricks() const;
     QQuickItem *getBattleField() const;
     Rocket *getRocket(Direction direction, QRect startPosition) const;
+    Eagle *getEagle() const;
+    QObject *getGameOver() const;
 
 private:
-    GameObjectFactory();
+    GameObjectFactory() = default;
 
     QQmlApplicationEngine* m_pEngine = nullptr;
     QQuickItem* m_pBattleField = nullptr;

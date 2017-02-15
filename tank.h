@@ -9,9 +9,14 @@ class Tank : public GameObject
 {
     Q_OBJECT
 public:
-    Tank() {}
+    enum Type {
+        Player,
+        Enemy
+    };
+    Tank() = default;
     virtual ~Tank() = default;
     void move(Direction step);
+    void rotate(Direction step);
     void fire();
     Direction getDirection() const noexcept {
         return m_lastStep;
@@ -22,12 +27,6 @@ protected:
     enum {
         STEP_SIZE = 10
     };
-    enum Type {
-        PLAYER,
-        ENEMY
-    };
-
-    void rotate(Direction step);
 
 private:
     QPoint m_point;
@@ -35,7 +34,7 @@ private:
     bool isChangeDirection(Direction step);
 
     Direction m_lastStep = Direction::NONE;
-    Type m_type = ENEMY;
+    Type m_type = Type::Enemy;
 
     const std::map<Direction, int> m_RotationMap = {
         {Direction::UP, 0},

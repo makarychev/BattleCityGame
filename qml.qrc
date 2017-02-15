@@ -6,10 +6,15 @@
         <file>BattleField.qml</file>
         <file>PlayerTank.qml</file>
         <file>Rocket.qml</file>
+        <file>Eagle.qml</file>
+        <file>GameOver.qml</file>
+        <file>EnemyTank.qml</file>
     </qresource>
     <qresource prefix="/files">
         <file>res/img/brick.png</file>
         <file>res/img/explosion.gif</file>
         <file>res/img/player_tank.png</file>
+        <file>res/img/eagle.png</file>
+        <file>res/img/enemy.png</file>
     </qresource>
 </RCC>

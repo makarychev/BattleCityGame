@@ -7,15 +7,8 @@ KeyHandler::KeyHandler()
     connect(this, SIGNAL(gameControls(Qt::Key)), &GameController::get(), SLOT(keyPressed(Qt::Key)));
 }
 
-KeyHandler::~KeyHandler()
-{
-
-}
-
 void KeyHandler::pressed(Qt::Key key)
 {
-    qDebug() << __FUNCTION__;
-
     switch (key) {
     case Qt::Key_Up:
     case Qt::Key_Down:

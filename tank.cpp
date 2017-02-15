@@ -13,7 +13,7 @@ void Tank::rotate(Direction step)
 
 void Tank::fire()
 {
-
+    GameController::get().rocketLaunch(this);
 }
 
 void Tank::init()

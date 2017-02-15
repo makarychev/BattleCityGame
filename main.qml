@@ -29,13 +29,6 @@ Window {
 
         BattleField {}
 
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            sd.width = sd.width/2
-            sd.height = sd.height/2
-        }
+        GameOver {}
     }
 }

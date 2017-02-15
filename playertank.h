@@ -9,9 +9,6 @@ class PlayerTank : public Tank
 public:
     explicit PlayerTank();
     Q_INVOKABLE void key(Qt::Key key);
-signals:
-
-public slots:
 };
 
 #endif // PLAYERTANK_H

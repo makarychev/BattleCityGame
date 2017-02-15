@@ -10,4 +10,7 @@ enum Direction {
     NONE
 };
 
+const uint DIRECTION_NUM = 4;
+const uint DIRECTION_RAND_NUM = 3;
+
 #endif // DIRECTION_H

@@ -8,7 +8,7 @@ class KeyHandler : public QQuickItem
     Q_OBJECT
 public:
     KeyHandler();
-    ~KeyHandler();
+    ~KeyHandler() = default; // todo: how default works for destructor
 
     Q_INVOKABLE void pressed(Qt::Key key);
 

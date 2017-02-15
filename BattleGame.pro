@@ -9,8 +9,8 @@ SOURCES += main.cpp \
     gamecontroller.cpp \
     gameobjectfactory.cpp \
     tank.cpp \
-    gameobject.cpp \
-    rocket.cpp
+    rocket.cpp \
+    bottank.cpp
 
 RESOURCES += qml.qrc
 
@@ -45,4 +45,6 @@ HEADERS += \
     gameobject.h \
     brick.h \
     rocket.h \
-    direction.h
+    direction.h \
+    eagle.h \
+    bottank.h

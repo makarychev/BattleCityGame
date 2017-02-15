@@ -4,11 +4,12 @@
 #include <QObject>
 #include <memory>
 #include <future>
-#include "rocket.h"
 
 class Tank;
 class Brick;
 class Rocket;
+class Eagle;
+class BotTank;
 
 class GameController : public QObject
 {
@@ -21,6 +22,7 @@ public:
 
     void init();
     bool isMoveAllowed(QRect newPos) const;
+    void rocketLaunch(Tank* tank);
     bool intersectWorldObj(Rocket* rocket);
     void start();
     void stop();
@@ -33,18 +35,27 @@ public slots:
     void keyPressed(Qt::Key key);
 
 private:
-    GameController() : m_bIsExit(false) {}
+    GameController() : m_bIsExit(false),  m_state(Stop) {}
     ~GameController() {
-        qDebug() << "~GameController()";
         stop();
     }
-
+    enum State {
+        Stop,
+        Start,
+        GameOver,
+        Win
+    };
 
     std::atomic<bool> m_bIsExit;
+    std::atomic<bool> m_bIsStopped;
+    std::atomic<State> m_state;
     std::future<void> m_backgroundWorker;
-    std::shared_ptr<Tank> m_pPlayerTank;
-    QList<Brick*> m_bricks;
+    Tank* m_pPlayerTank;
+    QList<Brick *> m_bricks;
+    QList<BotTank *> m_botTanks;
     std::map<std::size_t, Rocket* > m_rockets;
+    Eagle* m_eagle = nullptr;
+    QObject* m_gameOver = nullptr;
 };
 
 #endif // GAMECONTROLLER_H

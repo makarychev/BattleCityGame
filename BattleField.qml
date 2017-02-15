@@ -29,10 +29,11 @@ Item {
                 "  BB  BB          BB  BB  ",
                 "  BB  BB          BB  BB  ",
                 "  BB  BB   BBBB   BB  BB  ",
-                "           B  B           ",
+                "           BE B           ",
                 "           B  B           " //25
                 ];
         var brick = Qt.createComponent("Brick.qml");
+        var eagle = Qt.createComponent("Eagle.qml")
         var cellSize = 20;
         var object;
 
@@ -41,9 +42,13 @@ Item {
             for (var posY = 0; posY < row.length; posY++) {
                 if (row[posY] === ' ')
                     continue;
-                else if (row[posY] === 'B') {
+                else if (row[posY] === 'B')
                     object = brick.createObject(battleField);
+                else if (row[posY] === 'E'){
+                    object = eagle.createObject(battleField);
+                    console.log("eagle constructed" + object)
                 }
+
 
                 object.x = posY * cellSize;
                 object.y = posX * cellSize;

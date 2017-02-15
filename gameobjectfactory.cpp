@@ -3,6 +3,7 @@
 #include "playertank.h"
 #include "brick.h"
 #include "rocket.h"
+#include "eagle.h"
 
 using namespace std;
 
@@ -15,9 +16,14 @@ void GameObjectFactory::init(QQmlApplicationEngine *engine)
     m_pBattleField = m_rootObject->findChild<QQuickItem*>("battleField");
 }
 
-shared_ptr<Tank> GameObjectFactory::cretePlayerTank()
+Tank* GameObjectFactory::createTank(TankType type) const
 {
-    QString qmlFile = QStringLiteral("qrc:/PlayerTank.qml");
+    QString qmlFile;
+    if (type == TankType::Player)
+        qmlFile = QStringLiteral("qrc:/PlayerTank.qml");
+    else
+        qmlFile = QStringLiteral("qrc:/EnemyTank.qml");
+
     QQmlComponent component(m_pEngine, QUrl(qmlFile));
     auto object = qobject_cast<Tank*>(component.create());
     if (object != nullptr) {
@@ -27,20 +33,33 @@ shared_ptr<Tank> GameObjectFactory::cretePlayerTank()
     } else
         qDebug() << __FUNCTION__ << "object != nullptr";
 
-    // todo: check memory usage
-    shared_ptr<Tank> pPlayerTank(object, [](QObject* ){}); // if deleter is default -> "The program has unexpectedly finished."
-    pPlayerTank->setProperty("x", 0); // todo: should be in another place
-    pPlayerTank->setProperty("y", 0);
+    if (type == TankType::Player) {
+        object->setProperty("x", 180); // todo: should be in another place
+        object->setProperty("y", 480);
+    }
 
-    return pPlayerTank;
+    return object;
 }
 
 QList<Brick *> GameObjectFactory::getBricks() const
 {
-    QObject* rootObject = m_pEngine->rootObjects().first();
-    QList<Brick*> briks = rootObject->findChildren<Brick*>("brick");
+    QList<Brick*> briks = m_rootObject->findChildren<Brick*>("brick");
 
     return briks;
+}
+
+Eagle* GameObjectFactory::getEagle() const
+{
+    Eagle* pEagle = m_rootObject->findChild<Eagle*>("eagle");
+
+    return pEagle;
+}
+
+QObject *GameObjectFactory::getGameOver() const
+{
+    auto pGameOver = m_rootObject->findChild<QObject*>("game_over");
+
+    return pGameOver;
 }
 
 QQuickItem *GameObjectFactory::getBattleField() const
@@ -83,9 +102,4 @@ Rocket *GameObjectFactory::getRocket(Direction direction, QRect startPosition) c
     }
     qDebug() << "Rocket creation: " << object;
     return object;
-}
-
-GameObjectFactory::GameObjectFactory()
-{
-
 }
