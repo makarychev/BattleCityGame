@@ -47,4 +47,5 @@ HEADERS += \
     rocket.h \
     direction.h \
     eagle.h \
-    bottank.h
+    bottank.h \
+    config.h

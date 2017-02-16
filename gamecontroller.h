@@ -4,6 +4,7 @@
 #include <QObject>
 #include <memory>
 #include <future>
+#include "threadsafemap.h"
 
 class Tank;
 class Brick;
@@ -27,7 +28,9 @@ public:
     void start();
     void stop();
 
+private:
     void ActiveThread();
+    void updateStatistic(int left, int lives);
 
 signals:
 
@@ -50,12 +53,16 @@ private:
     std::atomic<bool> m_bIsStopped;
     std::atomic<State> m_state;
     std::future<void> m_backgroundWorker;
+
     Tank* m_pPlayerTank;
     QList<Brick *> m_bricks;
     QList<BotTank *> m_botTanks;
     std::map<std::size_t, Rocket* > m_rockets;
     Eagle* m_eagle = nullptr;
     QObject* m_gameOver = nullptr;
+    QObject* m_statistic = nullptr;
+    uint m_leftEnemyCount = 0;
+    uint m_lifePlayerCount = 0;
 };
 
 #endif // GAMECONTROLLER_H

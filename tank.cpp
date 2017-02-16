@@ -23,10 +23,10 @@ void Tank::init()
 
 void Tank::move(Direction step)
 {
-    qDebug() << __FUNCTION__ << "<-----" << " Step: " << step;
+//    qDebug() << __FUNCTION__ << "<-----" << " Step: " << step;
     if (step == Direction::NONE)
         return;
-    qDebug() << "Tank::move | Point = " << getPosition();
+//    qDebug() << "Tank::move | Point = " << getPosition();
 
     if (isChangeDirection(step)){
         rotate(step);

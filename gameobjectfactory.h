@@ -32,6 +32,7 @@ public:
     Rocket *getRocket(Direction direction, QRect startPosition) const;
     Eagle *getEagle() const;
     QObject *getGameOver() const;
+    QObject *getStatistic() const;
 
 private:
     GameObjectFactory() = default;

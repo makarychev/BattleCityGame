@@ -14,7 +14,7 @@ public:
     }
     ~Rocket() { qDebug() << "~Rocket()";}
 
-    void setDirection(Direction direction) noexcept {
+    void setDirection(const Direction direction) noexcept {
         m_direction = direction;
     }
     Direction getDirection() const noexcept {
@@ -22,14 +22,17 @@ public:
     }
     void setTank(Tank* tank) noexcept {
         m_tank = tank;
+        setDirection(tank->getDirection());
+        setPosition(tank->getRect());
     }
     Tank* getTank() const noexcept {
         return m_tank;
     }
-
+    void setPosition(const QRect&) noexcept;
     void moveTarget(int step);
 
 private:
+
     Direction m_direction;
     Tank* m_tank;
 signals:

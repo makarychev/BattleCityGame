@@ -9,6 +9,10 @@ Window {
     height: 600
     title: qsTr("The Game")
 
+    Statistic {
+
+    }
+
     Rectangle {
         id: field
         width: 520

@@ -1,7 +1,7 @@
 #ifndef BOTTANK_H
 #define BOTTANK_H
 #include "tank.h"
-#include <future>
+#include "threadable.h"
 
 class BotTank : public Tank
 {
@@ -14,18 +14,16 @@ public:
     void pause(bool status);
     void stop();
 private:
-    std::future<void> m_activeWorker;
     std::atomic<bool> m_isPause;
     std::atomic<bool> m_isStop;
-    void ActiveThread();
+    std::future<void> m_activeWorker;
+    void activeThread();
 
 signals:
-    void signalMove();
-    void signalRotate(Direction direction);
+    void signalJustDoIt(bool isFireNeeded);
 
 public slots:
-    void moveTarget();
-    void rotateTarget(Direction direction);
+    void justDoIt(bool isFireNeeded);
 };
 
 #endif // BOTTANK_H

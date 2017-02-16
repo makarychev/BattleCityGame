@@ -7,16 +7,46 @@
 #include "rocket.h"
 #include "eagle.h"
 #include "bottank.h"
+#include "config.h"
+#include "QThread"
 
 void GameController::init()
 {
-    m_pPlayerTank = GameObjectFactory::get().createTank(GameObjectFactory::Player);
     m_bricks = GameObjectFactory::get().getBricks();
     m_eagle = GameObjectFactory::get().getEagle();
     m_gameOver = GameObjectFactory::get().getGameOver();
-    qDebug() << "create bots ";
-    m_botTanks.push_back(dynamic_cast<BotTank *>(GameObjectFactory::get().createTank(GameObjectFactory::Enemy)));
+    m_statistic = GameObjectFactory::get().getStatistic();
+    m_leftEnemyCount = Config::get().getEnemyCount();
+    m_lifePlayerCount = Config::get().getPlayerLifeCount();
+    updateStatistic(m_leftEnemyCount, m_lifePlayerCount);
+
+    m_pPlayerTank = GameObjectFactory::get().createTank(GameObjectFactory::Player);
+    m_pPlayerTank->setPosition(Config::get().getPlayerPosition());
+    Rocket *pRocket = GameObjectFactory::get().getRocket(m_pPlayerTank->getDirection(), m_pPlayerTank->getRect());
+    pRocket->setTank(m_pPlayerTank);
+    pRocket->setVisible(false);
+    m_rockets.insert({reinterpret_cast<std::size_t>(m_pPlayerTank), pRocket});
+
+    auto enemyTanksPosition = Config::get().getEnemyPositions();
+    foreach (auto position, enemyTanksPosition) {
+        auto pBotTank = dynamic_cast<BotTank *>(GameObjectFactory::get().createTank(GameObjectFactory::Enemy));
+        pBotTank->setPosition(position);
+        m_botTanks.push_back(pBotTank);
+        Rocket *pRocket = GameObjectFactory::get().getRocket(pBotTank->getDirection(), pBotTank->getRect());
+        pRocket->setTank(pBotTank);
+        pRocket->setVisible(false);
+        m_rockets.insert({reinterpret_cast<std::size_t>(pBotTank), pRocket});
+    }
 }
+
+void GameController::updateStatistic(int left, int lives)
+{
+    QString sInfo = "Total enemies left: " + QString::number(left);
+    sInfo += "\tPlayer lives left: " + QString::number(lives);
+
+    m_statistic->setProperty("information", sInfo);
+}
+
 
 void GameController::keyPressed(Qt::Key key)
 {
@@ -38,16 +68,7 @@ void GameController::keyPressed(Qt::Key key)
         m_pPlayerTank->fire();
         return;
 
-    case Qt::Key_W:
-    case Qt::Key_A:
-    case Qt::Key_S:
-    case Qt::Key_D:
-    case Qt::Key_Control:
-        qDebug() << "W-A-S-D-Control pressed";
-        break;
-
     case Qt::Key_Escape:
-        qDebug() << "Escape pressed";
         switch (m_state.load()) {
         case State::Start:
             m_state.store(State::Stop);
@@ -82,7 +103,7 @@ bool GameController::isMoveAllowed(QRect newPos) const
 
     foreach (auto brick, m_bricks) {
         if (newPos.intersects(brick->getRect())){
-            qDebug() << "newPos: " << newPos << " | brick: " << brick->getRect();
+//            qDebug() << "newPos: " << newPos << " | brick: " << brick->getRect();
             return false;
         }
     }
@@ -91,10 +112,14 @@ bool GameController::isMoveAllowed(QRect newPos) const
 
 void GameController::rocketLaunch(Tank *tank)
 {
-    if (m_rockets.find(reinterpret_cast<std::size_t>(tank)) == std::end(m_rockets) && m_state.load() == State::Start) {
-        Rocket *pRocket = GameObjectFactory::get().getRocket(m_pPlayerTank->getDirection(), m_pPlayerTank->getRect());
-        pRocket->setTank(tank);
-        m_rockets.insert({reinterpret_cast<std::size_t>(tank), pRocket});
+    Rocket* rocket = m_rockets[reinterpret_cast<std::size_t>(tank)];
+//    qDebug() << rocket;
+    if (rocket->isVisible() == false) {
+//        qDebug() << "rocket---->activate!!!" ;
+        rocket->setDirection(tank->getDirection());
+        rocket->setPosition(tank->getRect());
+        rocket->setVisible(true);
+//        qDebug() << rocket << " | Direction: " << rocket->getDirection();
     }
 }
 
@@ -106,14 +131,16 @@ bool GameController::intersectWorldObj(Rocket *rocket)
             || currRect.y() <0
             || currRect.x() > battleField->width() - currRect.width()
             || currRect.y() > battleField->height() - currRect.height()) {
-        m_rockets.erase(reinterpret_cast<std::size_t>(rocket->getTank())); // todo: add ThreadSafety
+//        m_rockets.erase(reinterpret_cast<std::size_t>(rocket->getTank())); // todo: add ThreadSafety
+//        qDebug() << QThread::currentThreadId() << " rocket INTERSECTS!!!1";
         rocket->setVisible(false);
         return true;
     }
 
     auto pEagle = GameObjectFactory::get().getEagle();
     if (currRect.intersects(pEagle->getRect())) {
-        m_rockets.erase(reinterpret_cast<std::size_t>(rocket->getTank())); // todo: add ThreadSafety
+//        m_rockets.erase(reinterpret_cast<std::size_t>(rocket->getTank())); // todo: add ThreadSafety
+//        qDebug() << QThread::currentThreadId() << " rocket INTERSECTS!!!2";
         rocket->setVisible(false);
         pEagle->setVisible(false);
         m_state.store(State::GameOver);
@@ -124,10 +151,11 @@ bool GameController::intersectWorldObj(Rocket *rocket)
 
     foreach (auto brick, m_bricks) {
         if (currRect.intersects(brick->getRect())){
-            qDebug() << "Rocket hit brick: ";
+//            qDebug() << QThread::currentThreadId() << " rocket INTERSECTS!!!3";
+//            qDebug() << "Rocket hit brick: ";
             brick->setVisible(false);
             rocket->setVisible(false);
-            m_rockets.erase(reinterpret_cast<std::size_t>(rocket->getTank()));
+//            m_rockets.erase(reinterpret_cast<std::size_t>(rocket->getTank()));
             m_bricks.removeOne(brick); // todo: think about big O notation perfomance
             return true;
         }
@@ -162,13 +190,13 @@ void GameController::stop()
 
 void GameController::ActiveThread()
 {
-    int step = 1;
+    int step = 3;
     while (!m_bIsExit){
-        std::this_thread::sleep_for(std::chrono::milliseconds(3));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
         if (m_state.load() == State::Start) {
             foreach (auto item, m_rockets) {
-                qDebug() << "rocket[...] = " << item.second;
-                item.second->moveTarget(step);
+                if (item.second->isVisible())
+                    item.second->moveTarget(step);
             }
         }
     }

@@ -27,9 +27,7 @@ public:
     QRect getRect() const noexcept {
         return QRect(getPosition(), getSize());
     }
-    void visible(bool state) noexcept {
-        setProperty("visible", state);
-    }
+
     bool isDesroyable() const noexcept {
         return m_bIsDestroyable;
     }

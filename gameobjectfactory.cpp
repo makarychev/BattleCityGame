@@ -33,11 +33,6 @@ Tank* GameObjectFactory::createTank(TankType type) const
     } else
         qDebug() << __FUNCTION__ << "object != nullptr";
 
-    if (type == TankType::Player) {
-        object->setProperty("x", 180); // todo: should be in another place
-        object->setProperty("y", 480);
-    }
-
     return object;
 }
 
@@ -60,6 +55,13 @@ QObject *GameObjectFactory::getGameOver() const
     auto pGameOver = m_rootObject->findChild<QObject*>("game_over");
 
     return pGameOver;
+}
+
+QObject *GameObjectFactory::getStatistic() const
+{
+    auto object = m_rootObject->findChild<QObject*>("statistic");
+
+    return object;
 }
 
 QQuickItem *GameObjectFactory::getBattleField() const
@@ -100,6 +102,6 @@ Rocket *GameObjectFactory::getRocket(Direction direction, QRect startPosition) c
         object->setX(x);
         object->setY(y);
     }
-    qDebug() << "Rocket creation: " << object;
+//    qDebug() << "Rocket creation: " << object;
     return object;
 }

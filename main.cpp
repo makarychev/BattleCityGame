@@ -9,6 +9,7 @@
 #include "brick.h"
 #include "eagle.h"
 #include "bottank.h"
+#include <QThread>
 
 int main(int argc, char *argv[])
 {
@@ -35,6 +36,6 @@ int main(int argc, char *argv[])
 
     int appRes = app.exec();
     GameController::get().stop();
-    qDebug() << "app.exec() = " << appRes;
+    qDebug() << QThread::currentThreadId() << " app.exec() = " << appRes;
     return appRes;
 }
