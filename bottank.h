@@ -1,7 +1,7 @@
 #ifndef BOTTANK_H
 #define BOTTANK_H
 #include "tank.h"
-#include "threadable.h"
+#include <future>
 
 class BotTank : public Tank
 {

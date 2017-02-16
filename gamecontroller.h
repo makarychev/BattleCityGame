@@ -4,7 +4,6 @@
 #include <QObject>
 #include <memory>
 #include <future>
-#include "threadsafemap.h"
 
 class Tank;
 class Brick;
@@ -22,7 +21,7 @@ public:
     }
 
     void init();
-    bool isMoveAllowed(QRect newPos) const;
+    bool isMoveAllowed(const QRect& newPos, const Tank* tank) const;
     void rocketLaunch(Tank* tank);
     bool intersectWorldObj(Rocket* rocket);
     void start();

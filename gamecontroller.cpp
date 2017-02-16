@@ -87,7 +87,7 @@ void GameController::keyPressed(Qt::Key key)
         m_pPlayerTank->move(step);
 }
 
-bool GameController::isMoveAllowed(QRect newPos) const
+bool GameController::isMoveAllowed(const QRect& newPos, const Tank* tank) const
 {
     auto battleField = GameObjectFactory::get().getBattleField();
     if (newPos.x() < 0
@@ -107,6 +107,20 @@ bool GameController::isMoveAllowed(QRect newPos) const
             return false;
         }
     }
+    if (tank->getType() == Tank::Player) {
+        foreach (auto enemy, m_botTanks) {
+            if(newPos.intersects(enemy->getRect()))
+                return false;
+        }
+    } else {
+        if(newPos.intersects(m_pPlayerTank->getRect()))
+            return false;
+        foreach (auto enemy, m_botTanks) {
+            if(enemy != tank && newPos.intersects(enemy->getRect()))
+                return false;
+        }
+    }
+
     return true;
 }
 

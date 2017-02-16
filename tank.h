@@ -13,13 +13,16 @@ public:
         Player,
         Enemy
     };
-    Tank() = default;
+    Tank(Type type) : m_type(type) {}
     virtual ~Tank() = default;
     void move(Direction step);
     void rotate(Direction step);
     void fire();
     Direction getDirection() const noexcept {
         return m_lastStep;
+    }
+    Type getType() const noexcept {
+        return m_type;
     }
 
     Q_INVOKABLE void init();

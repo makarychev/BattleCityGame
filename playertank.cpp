@@ -1,7 +1,7 @@
 #include "playertank.h"
 #include <QDebug>
 
-PlayerTank::PlayerTank()
+PlayerTank::PlayerTank() : Tank(Tank::Type::Player)
 {
 
 }

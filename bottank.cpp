@@ -5,7 +5,7 @@
 
 using namespace std;
 
-BotTank::BotTank() : Tank(), m_isPause(false)
+BotTank::BotTank() : Tank(Tank::Type::Enemy), m_isPause(false)
 {
     connect(this, SIGNAL(signalJustDoIt(bool)), SLOT(justDoIt(bool)));
 }

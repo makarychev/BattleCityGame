@@ -50,7 +50,7 @@ void Tank::move(Direction step)
             break;
         }
         // change position
-        if (GameController::get().isMoveAllowed(QRect(point, getSize()))){
+        if (GameController::get().isMoveAllowed(QRect(point, getSize()), this)){
             setPosition(point);
         }
     }
