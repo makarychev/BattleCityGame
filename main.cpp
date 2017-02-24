@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Rocket>("Game.Rocket", 1, 0, "RocketCpp");
     qmlRegisterType<Eagle>("Game.Eagle", 1, 0, "EagleCpp");
 
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
     GameObjectFactory::get().init(&engine);
     GameController::get().init();

@@ -9,6 +9,6 @@ BrickCpp {
    Image{
        width: parent.width
        height: parent.height
-       source: "files/res/img/brick.png"
+       source: "/res/img/brick.png"
    }
 }

@@ -10,6 +10,6 @@ EagleCpp {
         id: eagle_img
         width: parent.width
         height: parent.height
-        source: "files/res/img/eagle.png"
+        source: "/res/img/eagle.png"
     }
 }

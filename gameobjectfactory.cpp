@@ -20,9 +20,9 @@ Tank* GameObjectFactory::createTank(TankType type) const
 {
     QString qmlFile;
     if (type == TankType::Player)
-        qmlFile = QStringLiteral("qrc:/PlayerTank.qml");
+        qmlFile = QStringLiteral("qrc:/qml/PlayerTank.qml");
     else
-        qmlFile = QStringLiteral("qrc:/EnemyTank.qml");
+        qmlFile = QStringLiteral("qrc:/qml/EnemyTank.qml");
 
     QQmlComponent component(m_pEngine, QUrl(qmlFile));
     auto object = qobject_cast<Tank*>(component.create());
@@ -73,7 +73,7 @@ QQuickItem *GameObjectFactory::getBattleField() const
 
 Rocket *GameObjectFactory::getRocket(Direction direction, QRect startPosition) const
 {
-    QString qmlFile = QStringLiteral("qrc:/Rocket.qml");
+    QString qmlFile = QStringLiteral("qrc:/qml/Rocket.qml");
     QQmlComponent component(m_pEngine, QUrl(qmlFile));
     Rocket* object = qobject_cast<Rocket*>(component.create());
     if (object != nullptr) {

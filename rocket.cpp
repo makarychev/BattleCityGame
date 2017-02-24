@@ -2,14 +2,21 @@
 #include "gamecontroller.h"
 
 
-Rocket::Rocket() :  GameObject(), m_direction(Direction::NONE) {
+Rocket::Rocket() :  GameObject(), m_direction(Direction::NONE)
+{
     connect(this, SIGNAL(signalMove(int)), SLOT(move(int)));
 }
 
-void Rocket::blast()
+void Rocket::blast() noexcept
 {
     setActive(false);
     setVisible(false);
+}
+
+void Rocket::launch() noexcept
+{
+    setActive(true);
+    setVisible(true);
 }
 
 void Rocket::move(int step)

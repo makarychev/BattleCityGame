@@ -27,7 +27,8 @@ public:
         return m_tank;
     }
 
-    void blast();
+    void blast() noexcept;
+    void launch() noexcept;
     void setPosition(const QRect&) noexcept;
     void moveTarget(int step);
 

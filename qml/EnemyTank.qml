@@ -8,7 +8,7 @@ EnemyTankCpp {
     height: 36
 
     Image {
-        source: "files/res/img/enemy.png"
+        source: "/res/img/enemy.png"
         width: parent.width
         height: parent.width
     }

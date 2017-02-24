@@ -1,21 +1,21 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>MainForm.ui.qml</file>
-        <file>Brick.qml</file>
-        <file>BattleField.qml</file>
-        <file>PlayerTank.qml</file>
-        <file>Rocket.qml</file>
-        <file>Eagle.qml</file>
-        <file>GameOver.qml</file>
-        <file>EnemyTank.qml</file>
-        <file>Statistic.qml</file>
-    </qresource>
-    <qresource prefix="/files">
+        <file>qml/BattleField.qml</file>
+        <file>qml/Brick.qml</file>
+        <file>qml/Eagle.qml</file>
+        <file>qml/EnemyTank.qml</file>
+        <file>qml/GameOver.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/MainForm.ui.qml</file>
+        <file>qml/PlayerTank.qml</file>
+        <file>qml/Rocket.qml</file>
+        <file>qml/Statistic.qml</file>
         <file>res/img/brick.png</file>
-        <file>res/img/explosion.gif</file>
-        <file>res/img/player_tank.png</file>
         <file>res/img/eagle.png</file>
         <file>res/img/enemy.png</file>
+        <file>res/img/explosion.gif</file>
+        <file>res/img/player_tank.png</file>
+        <file>res/img/stone.png</file>
+        <file>res/img/tank.png</file>
     </qresource>
 </RCC>

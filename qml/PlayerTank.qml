@@ -8,7 +8,7 @@ PlayerTank {
     height: 36
 
     Image {
-        source: "files/res/img/player_tank.png"
+        source: "/res/img/player_tank.png"
         width: parent.width
         height: parent.width
     }

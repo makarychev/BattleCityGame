@@ -150,8 +150,7 @@ void GameController::rocketLaunch(Tank *tank)
     if (rocket->isActive() == false && rocket->getTank()->isActive()) {
         rocket->setDirection(tank->getDirection());
         rocket->setPosition(tank->getRect());
-        rocket->setVisible(true);
-        rocket->setActive(true);
+        rocket->launch();
     }
 }
 
