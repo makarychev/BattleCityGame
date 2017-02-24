@@ -9,6 +9,7 @@ Window {
     height: 600
     title: qsTr("The Game")
 
+
     Statistic {
 
     }
@@ -34,5 +35,6 @@ Window {
         BattleField {}
 
         GameOver {}
+
     }
 }

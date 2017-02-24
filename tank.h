@@ -13,7 +13,7 @@ public:
         Player,
         Enemy
     };
-    Tank(Type type) : m_type(type) {}
+    Tank(Type type) : m_type(type) {m_isActive.store(true);}
     virtual ~Tank() = default;
     void move(Direction step);
     void rotate(Direction step);

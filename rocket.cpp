@@ -1,6 +1,17 @@
 #include "rocket.h"
 #include "gamecontroller.h"
 
+
+Rocket::Rocket() :  GameObject(), m_direction(Direction::NONE) {
+    connect(this, SIGNAL(signalMove(int)), SLOT(move(int)));
+}
+
+void Rocket::blast()
+{
+    setActive(false);
+    setVisible(false);
+}
+
 void Rocket::move(int step)
 {
 //    qDebug() << "Rocket::move(uint8_t step)";

@@ -50,6 +50,8 @@ Eagle* GameObjectFactory::getEagle() const
     return pEagle;
 }
 
+
+
 QObject *GameObjectFactory::getGameOver() const
 {
     auto pGameOver = m_rootObject->findChild<QObject*>("game_over");
@@ -69,7 +71,6 @@ QQuickItem *GameObjectFactory::getBattleField() const
     return m_pBattleField;
 }
 
-// todo: create object pool and reuse it
 Rocket *GameObjectFactory::getRocket(Direction direction, QRect startPosition) const
 {
     QString qmlFile = QStringLiteral("qrc:/Rocket.qml");

@@ -8,7 +8,8 @@ class PlayerTank : public Tank
     Q_OBJECT
 public:
     explicit PlayerTank();
-    Q_INVOKABLE void key(Qt::Key key);
+    ~PlayerTank() = default;
+    void restart(const QPoint &position);
 };
 
 #endif // PLAYERTANK_H

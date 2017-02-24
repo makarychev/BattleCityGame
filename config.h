@@ -20,12 +20,16 @@ public:
         return m_startPlayerPos;
     }
 
-    uint getEnemyCount() const noexcept {
+    int getEnemyCount() const noexcept {
         return m_enemyCount;
     }
 
-    uint getPlayerLifeCount() const noexcept {
+    int getPlayerLifeCount() const noexcept {
         return m_playerLives;
+    }
+
+    uint getEnemyAppearanceTimeout() const noexcept {
+        return m_enemyAppearanceTimeout;
     }
 
     // todo: implement me! e.g. load config from json
@@ -40,8 +44,9 @@ private:
 
     std::vector<QPoint> m_startEnemyPositions;
     QPoint m_startPlayerPos;
-    uint m_enemyCount = 10;
-    uint m_playerLives = 1;
+    int m_enemyCount = 10;
+    int m_playerLives = 2;
+    uint m_enemyAppearanceTimeout = 4000; // milliseconds
 };
 
 #endif // CONFIG_H

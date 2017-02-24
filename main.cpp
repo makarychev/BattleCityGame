@@ -13,8 +13,6 @@
 
 int main(int argc, char *argv[])
 {
-    qDebug() << __FUNCTION__ << "start ";
-
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
@@ -27,15 +25,13 @@ int main(int argc, char *argv[])
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
-    qDebug() << "start object creation";
-
     GameObjectFactory::get().init(&engine);
-    GameController::get().init(); // engine.rootObjects().first()
+    GameController::get().init();
 
     GameController::get().start();
 
     int appRes = app.exec();
     GameController::get().stop();
-    qDebug() << QThread::currentThreadId() << " app.exec() = " << appRes;
+
     return appRes;
 }

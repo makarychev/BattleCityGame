@@ -6,10 +6,11 @@
 #include <future>
 
 class Tank;
+class PlayerTank;
+class BotTank;
 class Brick;
 class Rocket;
 class Eagle;
-class BotTank;
 
 class GameController : public QObject
 {
@@ -24,12 +25,14 @@ public:
     bool isMoveAllowed(const QRect& newPos, const Tank* tank) const;
     void rocketLaunch(Tank* tank);
     bool intersectWorldObj(Rocket* rocket);
+    QPoint findEnemyRespawn(const BotTank& enemy);
     void start();
     void stop();
 
 private:
-    void ActiveThread();
+    void rocketsThread();
     void updateStatistic(int left, int lives);
+    void restartGame();
 
 signals:
 
@@ -53,15 +56,17 @@ private:
     std::atomic<State> m_state;
     std::future<void> m_backgroundWorker;
 
-    Tank* m_pPlayerTank;
+    PlayerTank* m_pPlayerTank;
     QList<Brick *> m_bricks;
-    QList<BotTank *> m_botTanks;
+    QList<Brick *> m_bricksCache;
+    QList<BotTank *> m_enemyTanks;
     std::map<std::size_t, Rocket* > m_rockets;
     Eagle* m_eagle = nullptr;
     QObject* m_gameOver = nullptr;
     QObject* m_statistic = nullptr;
-    uint m_leftEnemyCount = 0;
-    uint m_lifePlayerCount = 0;
+    int m_leftEnemyCount = 0;
+    int m_lifePlayerCount = 0;
+    std::mutex m_mutex;
 };
 
 #endif // GAMECONTROLLER_H

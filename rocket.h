@@ -9,10 +9,8 @@ class Rocket : public GameObject
 {
     Q_OBJECT
 public:
-    Rocket() : m_direction(Direction::NONE) {
-        connect(this, SIGNAL(signalMove(int)), SLOT(move(int)));
-    }
-    ~Rocket() { qDebug() << "~Rocket()";}
+    Rocket();
+    ~Rocket() = default;
 
     void setDirection(const Direction direction) noexcept {
         m_direction = direction;
@@ -28,13 +26,15 @@ public:
     Tank* getTank() const noexcept {
         return m_tank;
     }
+
+    void blast();
     void setPosition(const QRect&) noexcept;
     void moveTarget(int step);
 
 private:
-
     Direction m_direction;
-    Tank* m_tank;
+    Tank* m_tank = nullptr;
+
 signals:
     void signalMove(int step);
 

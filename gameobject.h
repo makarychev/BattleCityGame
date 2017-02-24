@@ -27,6 +27,12 @@ public:
     QRect getRect() const noexcept {
         return QRect(getPosition(), getSize());
     }
+    void setActive(bool state) noexcept {
+        m_isActive.store(state);
+    }
+    bool isActive() const noexcept {
+        return m_isActive.load();
+    }
 
     bool isDesroyable() const noexcept {
         return m_bIsDestroyable;
@@ -34,6 +40,7 @@ public:
 
 protected:
     bool m_bIsDestroyable = true;
+    std::atomic<bool> m_isActive;
 
 signals:
 
