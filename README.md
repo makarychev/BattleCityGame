@@ -11,7 +11,6 @@ I will appreciate if you find out mistakes, bugs etc., and write feedback!
 ## Compiling
 
 ```sh
-$ qmake -project
 $ qmake
 $ make
 ```
